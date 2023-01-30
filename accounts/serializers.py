@@ -6,6 +6,5 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        exclude = ('password',)
         read_only_fields = ['age']
         fields = ['id', 'first_name', 'username', 'last_name', 'email', 'groups', 'mobile_number', 'location', 'birth_date', 'age']
