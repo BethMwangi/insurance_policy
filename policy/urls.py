@@ -26,16 +26,17 @@ urlpatterns = [
     ),
     path('quote/create_qoute/',
          QuoteCreateView.as_view()),
+    path('quote/<int:pk>/confirm_quote/',
+         confirm_quote
+         ),
+    path('quote/<int:pk>/pay_quote/',
+         pay_quote
+         ),
     path(
         'quote/policies/<int:customer>/',
         QuotesByCustomerView.as_view(),
     ),
-    path('<int:pk>/confirm_quote/',
-         confirm_quote
-         ),
-    path('<int:pk>/pay_quote/',
-         pay_quote
-         ),
+    
 ]
 
 
