@@ -3,7 +3,7 @@ from .models import Policy, AgeGroupPolicy, Quote
 
 
 class PolicyAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'slug', 'history']
+    list_display = ['id', 'name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
 
 

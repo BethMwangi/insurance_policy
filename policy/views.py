@@ -28,7 +28,6 @@ class PolicyListView(generics.ListAPIView):
         'created',
     )
 
-
 class PolicyDetailView(generics.RetrieveAPIView):
     queryset = Policy.objects.all()
     serializer_class = PolicySerializer
@@ -57,9 +56,9 @@ class QuoteListView(generics.ListAPIView):
     )
 
 
-class QuoteCreateView(generics.CreateAPIView):
-    queryset = Quote.objects.all()
-    serializer_class = QuoteSerializer
+# class QuoteCreateView(generics.CreateAPIView):
+#     queryset = Quote.objects.all()
+#     serializer_class = QuoteSerializer
 
 
 class QuoteListAPIBaseView(generics.ListAPIView):

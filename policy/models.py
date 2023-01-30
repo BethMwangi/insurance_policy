@@ -17,7 +17,7 @@ class Policy(models.Model):
     )
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200)
- 
+
     status = models.IntegerField(
         choices=STATUS,
         default='1',
@@ -36,7 +36,7 @@ class Policy(models.Model):
         ]
 
     def __str__(self):
-        return  "{}".format(self.slug)
+        return "{}".format(self.slug)
 
 
 class AgeGroupPolicy(models.Model):
@@ -55,7 +55,8 @@ class AgeGroupPolicy(models.Model):
             MaxValueValidator(120),
             MinValueValidator(0)]
     )
-    price = models.DecimalField(max_digits=10, decimal_places=2, help_text="this is the price per 100 unit coverage per annum")
+    price = models.DecimalField(max_digits=10, decimal_places=2,
+                                help_text="this is the price per 100 unit coverage per annum")
     charge = models.IntegerField(
         validators=[
             MinValueValidator(0),
@@ -75,8 +76,6 @@ class AgeGroupPolicy(models.Model):
 
     def __str__(self):
         return "{} to {}".format(self.age_to, self.age_from)
-
-
 
 
 class Quote(models.Model):
@@ -100,7 +99,7 @@ class Quote(models.Model):
         default='1',
     )
     premium = models.DecimalField(max_digits=10,
-                                decimal_places=2, default=0.0)
+                                  decimal_places=2, default=0.0)
     paid = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -115,7 +114,7 @@ class Quote(models.Model):
         ]
 
     def __str__(self):
-        return  "{}".format(self.id)
+        return "{}".format(self.id)
 
     @property
     def get_user_age(self):
@@ -126,9 +125,8 @@ class Quote(models.Model):
     def get_quote_related_age_group(self):
         """ Get the quote related to customer age"""
         age = self.get_user_age
-        if age:
-            results = AgeGroupPolicy.objects.filter(Q(policy=self.policy) & Q(age_from__lte=age, age_to__gte=age)).values_list('charge', flat=True)
-        #todo return an exceptions when age is not valid and there is non type like policy returning None
+        results = AgeGroupPolicy.objects.filter(Q(policy=self.policy) & Q(
+            age_from__lte=age, age_to__gte=age)).values_list('charge', flat=True)
         return results
 
     @property
@@ -136,16 +134,13 @@ class Quote(models.Model):
         """
         Calculate the premium based on age_group represented in AgeGroupPolicy
         """
-        # if self.get_quote_related_age_group:
         quote_charge = [quote for quote in self.get_quote_related_age_group]
         if quote_charge:
             return self.cover / 100 * (quote_charge[0] / Decimal(100))
         return None
-    
+
     def save(self, *args, **kwargs):
         quote_charge = [quote for quote in self.get_quote_related_age_group]
         if quote_charge:
             self.premium = self.cover / 100 * (quote_charge[0] / Decimal(100))
-        super(Quote, self).save( *args, **kwargs)
-
- 
+        super(Quote, self).save(*args, **kwargs)

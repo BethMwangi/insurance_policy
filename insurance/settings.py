@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'policy.apps.PolicyConfig',
     'rest_framework',
     'django_filters',
+    'field_history',
+
 
 ]
 
