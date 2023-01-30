@@ -28,16 +28,10 @@ class PolicyListView(generics.ListAPIView):
         'created',
     )
 
+
 class PolicyDetailView(generics.RetrieveAPIView):
     queryset = Policy.objects.all()
     serializer_class = PolicySerializer
-
-
-class QuotesByCustomerView(QuoteListAPIBaseView):
-    lookup_field = 'customer'
-
-    def get_queryset(self, customer):
-        return Quote.objects.get_all_quotes_by_customer(customer)
 
 
 class QuoteListView(generics.ListAPIView):
@@ -49,16 +43,21 @@ class QuoteListView(generics.ListAPIView):
         'policy',
         'status',
     )
-    search_fields = ('customer', 'policy', 'status', 'field_history', )
+    search_fields = ('customer', 'policy', 'status', 'history', )
 
     ordering_fields = (
         'created',
     )
 
 
-# class QuoteCreateView(generics.CreateAPIView):
-#     queryset = Quote.objects.all()
-#     serializer_class = QuoteSerializer
+class QuoteDetailView(generics.RetrieveAPIView):
+    queryset = Quote.objects.all()
+    serializer_class = QuoteSerializer
+
+
+class QuoteCreateView(generics.CreateAPIView):
+    queryset = Quote.objects.all()
+    serializer_class = QuoteSerializer
 
 
 class QuoteListAPIBaseView(generics.ListAPIView):
@@ -129,11 +128,13 @@ def set_status(request, quote_id, status_id):
     )
 
 
-class QuoteDetailView(generics.RetrieveAPIView):
-    queryset = Quote.objects.all()
-    serializer_class = QuoteSerializer
-
-
 class QuoteConfirmationUpdateView(generics.UpdateAPIView):
     queryset = Quote.objects.all()
     serializer_class = QuoteSerializer
+
+
+class QuotesByCustomerView(QuoteListAPIBaseView):
+    lookup_field = 'customer'
+
+    def get_queryset(self, customer):
+        return Quote.objects.get_all_quotes_by_customer(customer)

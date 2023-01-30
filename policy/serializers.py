@@ -23,12 +23,11 @@ class QuoteSerializer(serializers.ModelSerializer):
     quote_price = serializers.CharField(source='quoted_price', read_only=True)
     status = serializers.SerializerMethodField()
     history = HistoricalRecordsSerializer(read_only=True)
-    customer = UserSerializer()
+    # customer = UserSerializer()
 
     class Meta:
-        depth = 1
         model = Quote
-        fields = '__all__'
+        fields = ["id", 'customer', 'policy', 'cover', 'age', 'quote_price', 'premium', 'paid', 'status', 'history']
         read_only_fields = ['premium']
 
 
