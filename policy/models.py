@@ -4,7 +4,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from field_history.tracker import FieldHistoryTracker
 
 from accounts.models import User
-from policy.models import Policy, AgeGroupPolicy
 from .managers import QuoteManager
 from decimal import Decimal
 
