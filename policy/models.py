@@ -125,6 +125,8 @@ class Quote(models.Model):
     def get_quote_related_age_group(self):
         """ Get the quote related to customer age"""
         age = self.get_user_age
+        if not age:
+            return ""
         results = AgeGroupPolicy.objects.filter(Q(policy=self.policy) & Q(
             age_from__lte=age, age_to__gte=age)).values_list('charge', flat=True)
         return results
@@ -134,10 +136,10 @@ class Quote(models.Model):
         """
         Calculate the premium based on age_group represented in AgeGroupPolicy
         """
-        quote_charge = [quote for quote in self.get_quote_related_age_group]
-        if quote_charge:
+        if self.get_quote_related_age_group is not None:
+            quote_charge = [quote for quote in self.get_quote_related_age_group]
             return self.cover / 100 * (quote_charge[0] / Decimal(100))
-        return None
+        return ""
 
     def save(self, *args, **kwargs):
         quote_charge = [quote for quote in self.get_quote_related_age_group]
