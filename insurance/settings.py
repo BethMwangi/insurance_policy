@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
+    'policy.apps.PolicyConfig',
     'rest_framework',
     'django_filters',
 
