@@ -12,17 +12,17 @@ class UserAdmin(BaseUserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     fieldsets = (
-      (None, {'fields': ('email', 'password', )}),
+      (None, {'fields': ('email', 'password',  )}),
       (_('Personal info'), {'fields': ('first_name', 'last_name')}),
       (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                      'groups', 'user_permissions')}),
       (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-        (_('user_info'), {'fields': ('mobile_number', 'age', 'location', 'birth_date', )}),
+        (_('user_info'), {'fields': ('mobile_number', 'location', 'birth_date', )}),
     )
     add_fieldsets = (
       (None, {
           'classes': ('wide', ),
-          'fields': ('email', 'password1', 'password2'),
+          'fields': ('email', 'password1', 'password2', 'mobile_number'),
       }),
     )
     list_display = ['email', 'username', 'first_name', 'mobile_number', 'location', 'birth_date', 'age' ,'date_joined']
