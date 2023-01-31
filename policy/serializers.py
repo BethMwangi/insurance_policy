@@ -23,7 +23,6 @@ class QuoteSerializer(serializers.ModelSerializer):
     quote_price = serializers.CharField(source='quoted_price', read_only=True)
     status = serializers.SerializerMethodField()
     history = HistoricalRecordsSerializer(read_only=True)
-    # customer = UserSerializer()
 
     class Meta:
         model = Quote

@@ -1,7 +1,6 @@
 from django.urls import path, include
 
 from .views import (
-    confirm_quote,
     pay_quote,
     set_status,
     PolicyListView,
@@ -10,7 +9,8 @@ from .views import (
     QuoteDetailView,
     QuoteCreateView,
     CreateQuoteView,
-    QuotesByCustomerView
+    QuotesByCustomerView,
+    QuoteAcceptView,
 
 )
 
@@ -26,9 +26,10 @@ urlpatterns = [
     ),
     path('quote/create_qoute/',
          QuoteCreateView.as_view()),
+
     path('quote/<int:pk>/confirm_quote/',
-         confirm_quote
-         ),
+         QuoteAcceptView.as_view()),
+
     path('quote/<int:pk>/pay_quote/',
          pay_quote
          ),

@@ -98,13 +98,22 @@ class CreateQuoteView(generics.CreateAPIView):
 
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
+class QuoteAcceptView(generics.ListCreateAPIView):
+    queryset = Quote.objects.all()
+    serializer_class = QuoteSerializer
 
-def confirm_quote(request, pk):
-    qoute = get_object_or_404(Quote, id=pk)
-    change = set_status_handler(
-        lambda: Quote.objects.accept_quote(qoute)
-    )
-    return change
+    def post(self, request, pk):
+        qoute = get_object_or_404(Quote, id=pk)
+        statuschange = set_status_handler(
+        lambda: Quote.objects.accept_quote(qoute))
+        data = {'status': statuschange}
+        serializer = QuoteSerializer(qoute, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"status": "success", "data": serializer.data})
+        else:
+            return Response({"status": "error", "data": serializer.errors})
+
 
 
 def pay_quote(request, pk):
