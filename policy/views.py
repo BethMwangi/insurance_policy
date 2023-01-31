@@ -5,8 +5,9 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework import status
+from field_history.models import FieldHistory
 
-from .serializers import PolicySerializer, QuoteSerializer
+from .serializers import PolicySerializer, QuoteSerializer, HistoricalRecordsSerializer
 from .models import Policy, Quote
 from .helpers import set_status_handler, QuoteListAPIBaseView
 from .status import Status
@@ -98,6 +99,7 @@ class CreateQuoteView(generics.CreateAPIView):
 
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
 class QuoteAcceptView(generics.ListCreateAPIView):
     queryset = Quote.objects.all()
     serializer_class = QuoteSerializer
@@ -105,7 +107,7 @@ class QuoteAcceptView(generics.ListCreateAPIView):
     def post(self, request, pk):
         qoute = get_object_or_404(Quote, id=pk)
         statuschange = set_status_handler(
-        lambda: Quote.objects.accept_quote(qoute))
+            lambda: Quote.objects.accept_quote(qoute))
         data = {'status': statuschange}
         serializer = QuoteSerializer(qoute, data=request.data, partial=True)
         if serializer.is_valid():
@@ -114,6 +116,7 @@ class QuoteAcceptView(generics.ListCreateAPIView):
         else:
             return Response({"status": "error", "data": serializer.errors})
 
+
 class QuotePayView(generics.ListCreateAPIView):
     queryset = Quote.objects.all()
     serializer_class = QuoteSerializer
@@ -121,7 +124,7 @@ class QuotePayView(generics.ListCreateAPIView):
     def post(self, request, pk):
         qoute = get_object_or_404(Quote, id=pk)
         statuschange = set_status_handler(
-        lambda: Quote.objects.pay_quote(qoute))
+            lambda: Quote.objects.pay_quote(qoute))
         data = {'status': statuschange}
         serializer = QuoteSerializer(qoute, data=request.data, partial=True)
         if serializer.is_valid():

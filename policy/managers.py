@@ -6,6 +6,7 @@ from .exceptions import InvalidArgumentError, QuoteAlreadyArchivedError
 from .status import Status
 from . import models
 
+
 class QuoteManager(Manager):
     def set_status(self, quote, status):
         if status is None or not isinstance(status, Status):
@@ -20,7 +21,6 @@ class QuoteManager(Manager):
         quote.status = status.value
         quote.save()
 
-    
     def accept_quote(self, quote):
         if quote is None or not isinstance(quote, models.Quote):
             raise InvalidArgumentError('quote')

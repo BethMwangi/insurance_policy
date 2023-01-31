@@ -2,13 +2,14 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from .serializers import  QuoteSerializer
+from .serializers import QuoteSerializer
 from django.http import HttpResponse
 from rest_framework import status
 
 
 from django.http import HttpResponse
 from .exceptions import InvalidArgumentError, QuoteAlreadyArchivedError
+
 
 def set_status_handler(set_status_delegate):
     try:
@@ -19,7 +20,6 @@ def set_status_handler(set_status_delegate):
         return HttpResponse(err, status=status.HTTP_400_BAD_REQUEST)
 
     return HttpResponse(status=status.HTTP_204_NO_CONTENT)
-
 
 
 class QuoteListAPIBaseView(generics.ListAPIView):

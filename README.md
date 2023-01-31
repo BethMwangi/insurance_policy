@@ -17,8 +17,8 @@ Develop an API endpoint create a customer and get policy quote based on age rang
 ### 🔧 Authentication and authorization
 
 - Authentication can be handled in two ways, ie,
-    - Method 1: Use Django Basic Authentication system to authenticate users by use of email and password fields, these users can either be set as 'admin/superusers/', 'basic system backend users'. In order to access views and handle specific tasks, django default permissions or use of custom permissions can be used.
-    - Method 2: When a customer is being created, in order to get quotes and get a list of their quotes, a us of TokenAuthentication, in order to identify the request and determine if it is permitted 
+    - Method 1: Use Django Basic Authentication system to authenticate users by use of email and password fields, these users can either be set as 'admin/superusers/', 'basic system backend users'. In order to access views and handle specific tasks, django default permissions or use of custom permissions can be used. ie, [IsAdminUser] can be used to list all users in the system 
+    - Method 2: When a customer is being created, in order to get quotes and get a list of their quotes, a us of TokenAuthentication, in order to identify the request and determine if it is permitted ,ie. use of [IsAuthenticated] to get the customer to create a quote 
 
 ### 🔎 Improvements
 

@@ -23,7 +23,7 @@ urlpatterns = [
 
     path('quote/', QuoteListView.as_view(), name='quote_list'),
     path('quote/<int:pk>', QuoteDetailView.as_view(),
-    ),
+         ),
     path('quote/create_qoute/',
          QuoteCreateView.as_view()),
 
@@ -36,7 +36,5 @@ urlpatterns = [
         'quote/policies/<int:customer>/',
         QuotesByCustomerView.as_view(),
     ),
-    
+
 ]
-
-
