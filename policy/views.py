@@ -114,6 +114,21 @@ class QuoteAcceptView(generics.ListCreateAPIView):
         else:
             return Response({"status": "error", "data": serializer.errors})
 
+class QuotePayView(generics.ListCreateAPIView):
+    queryset = Quote.objects.all()
+    serializer_class = QuoteSerializer
+
+    def post(self, request, pk):
+        qoute = get_object_or_404(Quote, id=pk)
+        statuschange = set_status_handler(
+        lambda: Quote.objects.pay_quote(qoute))
+        data = {'status': statuschange}
+        serializer = QuoteSerializer(qoute, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"status": "success", "data": serializer.data})
+        else:
+            return Response({"status": "error", "data": serializer.errors})
 
 
 def pay_quote(request, pk):
